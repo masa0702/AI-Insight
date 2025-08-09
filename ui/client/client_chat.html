@@ -1,0 +1,114 @@
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>エージェント・チャット | Client</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css"></head><body>
+<header class="appbar">
+  <h1>新規調査（未命名）</h1>
+  <div class="inline">
+    <a class="btn-text" href="client_dashboard.html">← 戻る</a>
+    <a class="btn btn-primary" href="survey_builder.html">保存して次へ</a>
+  </div>
+</header>
+<nav class="subnav">
+  <a href="client_dashboard.html">ダッシュボード</a>
+  <a class="active" href="client_chat.html">エージェント</a>
+  <a href="survey_builder.html">アンケート</a>
+  <a href="procedure_builder.html">実施手順</a>
+  <a href="targeting.html">配置・条件</a>
+  <a href="live_progress.html">ライブ進捗</a>
+</nav>
+
+<main class="client-wrap container">
+  <!-- Left: Chat -->
+  <section class="chat-pane" aria-label="エージェントとのチャット">
+    <div class="messages" role="log" aria-live="polite" aria-relevant="additions">
+      <div class="date-sep">今日 10:00</div>
+
+      <div class="msg-row agent">
+        <div class="avatar" aria-hidden="true" title="Agent">A</div>
+        <div>
+          <div class="message">
+            本調査の目的は何ですか？（例：新商品の初見反応の把握）
+            <div class="msg-meta">Agent・10:02</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="msg-row client">
+        <div><div class="message">駅前で10〜20代の来訪者に、試作品への第一印象を聞きたいです。<div class="msg-meta">You・10:03</div></div></div>
+        <div class="avatar you" aria-hidden="true" title="You">Y</div>
+      </div>
+
+      <div class="msg-row agent">
+        <div class="avatar" aria-hidden="true">A</div>
+        <div class="message">
+          対象者条件・サンプル数・期日・予算を確認します。
+          <div class="preview card" role="group" aria-label="設計プレビュー" style="margin-top:10px">
+            <div class="rowline">
+              <div class="inline">
+                <span class="badge version" aria-label="バージョン">v1.2</span>
+                <strong>アンケート</strong>（10問 / 推定5分）
+              </div>
+              <div class="mono">＋3問→2問に最適化</div>
+            </div>
+            <div class="rowline" aria-label="実施手順"><strong>実施手順</strong>（7ステップ）<span class="hint">録音は同意必須</span></div>
+            <div class="rowline" aria-label="見積"><strong>見積</strong> n=200 / 3日 / ¥480,000</div>
+            <div class="actions" role="toolbar" aria-label="操作">
+              <a class="btn" href="survey_builder.html">✏️ アンケート編集</a>
+              <a class="btn" href="procedure_builder.html">📋 手順編集</a>
+              <a class="btn btn-primary" href="targeting.html">🚀 これで開始する</a>
+            </div>
+            <div class="hint">後からいつでも編集できます</div>
+          </div>
+          <div class="msg-meta">Agent・10:04</div>
+        </div>
+      </div>
+
+      <div class="msg-row client">
+        <div><div class="message">良いです。夕方中心でお願いします。<div class="msg-meta">You・10:05</div></div></div>
+        <div class="avatar you" aria-hidden="true">Y</div>
+      </div>
+    </div>
+
+    <div class="composer" role="group" aria-label="メッセージ送信">
+      <input class="input" placeholder="メッセージを入力">
+      <button class="icon-btn" aria-label="資料を添付">📎</button>
+      <a class="btn btn-primary" href="survey_builder.html">送信して設計へ</a>
+    </div>
+    <div class="quick" aria-label="クイック返信">
+      <a class="chip" href="targeting.html">🎯 対象者案を出して</a>
+      <a class="chip" href="live_progress.html">🧮 見積を見直す</a>
+      <a class="chip" href="survey_builder.html">🪄 8問にすっきり</a>
+    </div>
+  </section>
+
+  <!-- Right: Summary / Actions -->
+  <aside class="summary" aria-label="要件サマリ">
+    <div class="card" style="padding:16px">
+      <div class="section-title">要件サマリ</div>
+      <div class="field"><div>目的</div><div class="val">初見反応 <a class="icon-btn" href="client_chat.html">✎</a></div></div>
+      <div class="field"><div>地域</div><div class="val">東京・駅前</div></div>
+      <div class="field"><div>対象者</div><div class="val">10–20代 来訪者</div></div>
+      <div class="field"><div>サンプル</div><div class="val">200</div></div>
+      <div class="field"><div>期日</div><div class="val">3日</div></div>
+      <div class="field"><div>予算</div><div class="val">¥500,000</div></div>
+      <div class="chips" style="margin-top:8px">
+        <span class="chip warn">録音は同意必須（国X）</span>
+        <span class="chip">未成年インタビュー不可</span>
+      </div>
+    </div>
+    <div class="actions">
+      <div class="card" style="padding:14px">
+        <div><div class="section-title">次の一手（提案）</div><div class="mono">18–20時は報酬 +10%</div></div>
+        <a class="btn btn-primary" href="targeting.html">採用する</a>
+      </div>
+      <div class="card" style="padding:14px">
+        <div><strong>質問数 10→8 に最適化</strong><div class="mono">離脱率 低下見込み</div></div>
+        <a class="btn" href="survey_builder.html">プレビュー</a>
+      </div>
+    </div>
+  </aside>
+</main>
+</body></html>

@@ -1,0 +1,52 @@
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>実施手順 | Client</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css"></head><body>
+<header class="appbar">
+  <h1>駅前・初見反応｜実施手順</h1>
+  <div class="inline"><a class="btn" href="survey_builder.html">戻る</a><a class="btn btn-primary" href="targeting.html">保存して配置へ</a></div>
+</header>
+<nav class="subnav">
+  <a href="client_dashboard.html">ダッシュボード</a>
+  <a href="client_chat.html">エージェント</a>
+  <a href="survey_builder.html">アンケート</a>
+  <a class="active" href="procedure_builder.html">実施手順</a>
+  <a href="targeting.html">配置・条件</a>
+  <a href="live_progress.html">ライブ進捗</a>
+</nav>
+
+<main class="builder container">
+  <aside class="panel" aria-label="ステップ一覧">
+    <div class="section-title">ステップ</div>
+    <div class="steps">
+      <div class="step">1. 集合地点と対応エリア地図</div>
+      <div class="step">2. アプローチトーク（現地語）</div>
+      <div class="step">3. 同意取得（録音/サイン）</div>
+      <div class="step">4. 質問読み上げ台本</div>
+      <div class="step">5. 写真/音声の撮り方</div>
+      <div class="step">6. 安全指針/NG</div>
+      <div class="step">7. 提出前セルフQC</div>
+    </div>
+    <a class="btn" style="margin-top:8px" href="procedure_builder.html">＋ ステップ追加</a>
+  </aside>
+
+  <section class="panel form" aria-label="選択ステップの編集">
+    <div class="section-title">2. アプローチトーク</div>
+    <label>原文<textarea class="input" style="height:120px;padding:12px" placeholder="こんにちは。新商品の印象調査です。所要5分、録音の同意をお願いします。"></textarea></label>
+    <label>現地語<textarea class="input" style="height:120px;padding:12px" placeholder="Hello! We're doing a quick 5-min survey..."></textarea></label>
+    <div class="hint">※訳語はワーカー画面の台本に表示されます</div>
+    <div class="inline"><a class="btn" href="procedure_builder.html">用語集</a><a class="btn" href="procedure_builder.html">翻訳を固定</a></div>
+  </section>
+
+  <aside class="phone-mini" aria-label="ワーカープレビュー">
+    <div class="topbar"><a class="btn">←</a><div class="mono">Preview</div><a class="btn">？</a></div>
+    <div class="stepper"><div class="bar" style="width:20%"></div></div>
+    <div class="screen">
+      <div class="qcard"><div class="qtitle">アプローチトーク</div><p class="qdesc">「こんにちは…録音の同意を頂けますか？」</p></div>
+      <div class="qcard"><div class="qtitle">写真の撮り方</div><p class="qdesc">逆光を避け、被写体を中央に。</p></div>
+    </div>
+  </aside>
+</main>
+</body></html>

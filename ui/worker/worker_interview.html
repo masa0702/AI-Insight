@@ -1,0 +1,96 @@
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>インタビュー | Worker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css"></head><body>
+<nav class="subnav">
+  <a href="worker_home.html">タスク</a>
+  <a href="worker_task_detail.html">詳細</a>
+  <a class="active" href="worker_interview.html">インタビュー</a>
+  <a href="worker_media.html">メディア</a>
+  <a href="worker_submit.html">提出</a>
+  <a href="worker_chat.html">チャット</a>
+</nav>
+
+<div class="phone" role="application" aria-label="インタビュー画面（モバイル）">
+  <div class="topbar">
+    <a class="btn" href="worker_task_detail.html" aria-label="前の画面へ戻る">← 戻る</a>
+    <div class="mono" aria-live="polite">3 / 10</div>
+    <a class="btn" href="worker_chat.html" aria-label="ヘルプ">？</a>
+  </div>
+  <div class="stepper" aria-hidden="true"><div class="bar" style="width:30%"></div></div>
+
+  <!-- 状態デモ（CSS切替） -->
+  <div class="recstate-controls" aria-hidden="true">
+    <input type="radio" name="recstate" id="st-standby" checked>
+    <input type="radio" name="recstate" id="st-live">
+    <input type="radio" name="recstate" id="st-paused">
+    <input type="radio" name="recstate" id="st-saved">
+  </div>
+
+  <div class="statusbar" role="status" aria-live="polite">
+    <span class="dot standby" aria-hidden="true"></span>
+    <span class="label">● </span>
+    <span class="mono">/ 00:12</span>
+  </div>
+
+  <div class="screen">
+    <div class="script" role="region" aria-label="台本とガイド">
+      <input class="tabs" type="radio" id="tab-script" name="tab" checked>
+      <input class="tabs" type="radio" id="tab-guide" name="tab">
+      <input class="tabs" type="radio" id="tab-ng" name="tab">
+
+      <div class="tab-head" role="tablist" aria-label="台本タブ">
+        <label for="tab-script" role="tab" aria-selected="true">🗣️ 台本</label>
+        <label for="tab-guide" role="tab" aria-selected="false">🧭 ガイド</label>
+        <label for="tab-ng" role="tab" aria-selected="false">🚫 NG例</label>
+      </div>
+
+      <div class="tab-content">
+        <div class="pane pane-script" role="tabpanel">こんにちは。新商品の印象調査です。所要は5分です。録音の同意をいただけますか？</div>
+        <div class="pane pane-guide" role="tabpanel">対象：10–20代。混雑を避け、静かな場所で。</div>
+        <div class="pane pane-ng" role="tabpanel">誘導質問はしない。「良いですよね？」は禁止。</div>
+      </div>
+
+      <div class="togglebar">
+        <label class="toggle">読み上げ<input type="checkbox" aria-label="読み上げON/OFF"></label>
+        <label class="toggle">翻訳<input type="checkbox" aria-label="現地語↔母語"></label>
+      </div>
+    </div>
+
+    <div class="qcard" role="group" aria-labelledby="qtitle">
+      <h2 id="qtitle" class="qtitle">Q3. 第一印象（必須）</h2>
+      <p class="qdesc">最初に見た時の直感でお答えください。</p>
+      <div class="tiles">
+        <label class="tile"><input type="radio" name="q3"><span>とても良い</span></label>
+        <label class="tile"><input type="radio" name="q3"><span>良い</span></label>
+        <label class="tile"><input type="radio" name="q3"><span>普通</span></label>
+        <label class="tile"><input type="radio" name="q3"><span>悪い</span></label>
+        <label class="tile"><input type="radio" name="q3"><span>とても悪い</span></label>
+      </div>
+    </div>
+
+    <label class="toggle" style="justify-content:flex-start">同意取得済み
+      <input id="consent" type="checkbox" checked>
+    </label>
+    <p class="mono">録音は調査目的のみに使用します。</p>
+
+    <div class="recbar">
+      <button class="rec" id="recBtn" aria-label="録音開始">REC</button>
+      <div class="wave" aria-hidden="true">音声プレビュー</div>
+    </div>
+
+    <div class="fnav" aria-label="ナビゲーション">
+      <a class="btn" href="worker_task_detail.html">戻る</a>
+      <a class="btn btn-primary" href="worker_media.html">次へ（写真）</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  @supports(selector(:has(*))){
+    #consent:not(:checked) ~ .recbar #recBtn{border-color:var(--rec-disabled);color:var(--rec-disabled);cursor:not-allowed}
+  }
+</style>
+</body></html>

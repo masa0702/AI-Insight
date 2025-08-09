@@ -1,0 +1,54 @@
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>アンケート設計 | Client</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css"></head><body>
+<header class="appbar">
+  <h1>駅前・初見反応｜アンケート</h1>
+  <div class="inline"><a class="btn" href="client_chat.html">戻る</a><a class="btn btn-primary" href="procedure_builder.html">保存して手順へ</a></div>
+</header>
+<nav class="subnav">
+  <a href="client_dashboard.html">ダッシュボード</a>
+  <a href="client_chat.html">エージェント</a>
+  <a class="active" href="survey_builder.html">アンケート</a>
+  <a href="procedure_builder.html">実施手順</a>
+  <a href="targeting.html">配置・条件</a>
+  <a href="live_progress.html">ライブ進捗</a>
+</nav>
+
+<main class="builder container">
+  <aside class="panel" aria-label="質問リスト">
+    <div class="section-title">質問</div>
+    <div class="list">
+      <div class="item"><span>Q1 性別</span><span class="type">単一</span></div>
+      <div class="item"><span>Q2 年齢帯</span><span class="type">単一</span></div>
+      <div class="item"><span>Q3 第一印象</span><span class="type">リッカート</span></div>
+      <div class="item"><span>Q4 良い点/悪い点</span><span class="type">自由</span></div>
+      <a class="btn" href="survey_builder.html">＋ 質問を追加</a>
+    </div>
+  </aside>
+
+  <section class="panel canvas" aria-label="キャンバス">
+    <div class="qblock">
+      <div class="title">Q3. 新商品の第一印象（必須）</div>
+      <div class="hint">最初に見た時の直感でお答えください</div>
+      <div class="options"><span class="opt">とても良い</span><span class="opt">良い</span><span class="opt">普通</span><span class="opt">悪い</span><span class="opt">とても悪い</span></div>
+    </div>
+    <div class="qblock">
+      <div class="title">Q4. 良い点/悪い点（自由記述）</div>
+      <div class="hint">20文字以上の入力を推奨</div>
+      <div class="opt">テキストエリア</div>
+    </div>
+  </section>
+
+  <aside class="panel prop" aria-label="プロパティ">
+    <div><div class="section-title">所要時間</div><div class="hint">推定 5分 / 離脱率 低</div></div>
+    <div><div class="section-title">バリデーション</div>
+      <div class="checklist"><div class="check"><span class="ok">✔</span> 必須設定：OK</div><div class="check"><span class="ok">✔</span> 誘導表現：なし</div><div class="check"><span class="ok">✔</span> 分岐ロジック：整合</div></div>
+    </div>
+    <div><div class="section-title">翻訳</div><div class="chips"><span class="chip">日本語</span><span class="chip">英語</span><span class="chip">韓国語</span></div></div>
+    <a class="btn" href="procedure_builder.html">次へ</a>
+  </aside>
+</main>
+</body></html>

@@ -1,0 +1,53 @@
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ライブ進捗 | Client</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css"></head><body>
+<header class="appbar">
+  <h1>駅前・初見反応｜ライブ進捗</h1>
+  <div class="inline"><a class="btn" href="targeting.html">設定を調整</a><a class="btn btn-primary" href="client_dashboard.html">CSVエクスポート</a></div>
+</header>
+<nav class="subnav">
+  <a href="client_dashboard.html">ダッシュボード</a>
+  <a href="client_chat.html">エージェント</a>
+  <a href="survey_builder.html">アンケート</a>
+  <a href="procedure_builder.html">実施手順</a>
+  <a href="targeting.html">配置・条件</a>
+  <a class="active" href="live_progress.html">ライブ進捗</a>
+</nav>
+
+<main class="container" style="padding:16px 0">
+  <section class="panel" style="margin-bottom:16px">
+    <div class="kbar">
+      <div class="pill">進捗 65%（130/200）</div>
+      <div class="pill">稼働ワーカー 24</div>
+      <div class="pill">平均 5.2分</div>
+      <div class="pill">QC保留 7</div>
+    </div>
+  </section>
+
+  <div class="builder" style="grid-template-columns:1fr 420px">
+    <section class="panel">
+      <div class="section-title">マップ（ヒート）</div>
+      <div class="heat"></div>
+      <div class="section-title" style="margin-top:12px">到着サンプル</div>
+      <div class="stream">
+        <div class="sample"><span>#1243 08:12 同意✅ 位置✅</span><div class="flags"><span class="flag warn">台本逸脱</span><a class="btn" href="client_chat.html">開く</a></div></div>
+        <div class="sample"><span>#1244 08:13 同意✅ 位置✅</span><div class="flags"><span class="flag ok">OK</span><a class="btn" href="client_chat.html">開く</a></div></div>
+        <div class="sample"><span>#1245 08:14 同意✅ 位置⚠</span><div class="flags"><span class="flag warn">位置外</span><a class="btn" href="client_chat.html">開く</a></div></div>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <div class="section-title">介入（エージェント提案）</div>
+      <div class="checklist">
+        <label class="check"><input type="checkbox"> エリアを南口へ+200m広げる</label>
+        <label class="check"><input type="checkbox" checked> 18–20時 報酬+10%</label>
+        <label class="check"><input type="checkbox"> 台本の順序：同意→Q1→Q3→Q2</label>
+      </div>
+      <div class="inline" style="margin-top:8px"><a class="btn" href="client_chat.html">提案を送る</a><a class="btn btn-primary" href="targeting.html">即時反映</a></div>
+    </aside>
+  </div>
+</main>
+</body></html>

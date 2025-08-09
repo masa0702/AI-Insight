@@ -1,0 +1,81 @@
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ダッシュボード | Client</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css"></head><body>
+<header class="appbar">
+  <h1>プロジェクト</h1>
+  <div class="inline">
+    <a class="btn" href="survey_builder.html">テンプレート</a>
+    <a class="btn btn-primary" href="client_chat.html">＋ 新規調査</a>
+  </div>
+</header>
+<nav class="subnav">
+  <a class="active" href="client_dashboard.html">ダッシュボード</a>
+  <a href="client_chat.html">エージェント</a>
+  <a href="survey_builder.html">アンケート</a>
+  <a href="procedure_builder.html">実施手順</a>
+  <a href="targeting.html">配置・条件</a>
+  <a href="live_progress.html">ライブ進捗</a>
+</nav>
+
+<main class="container">
+  <div class="toolbar">
+    <div class="tool-left">
+      <div class="search"><input class="input" placeholder="キーワード検索"><a class="btn" href="client_dashboard.html">検索</a></div>
+      <div class="chips">
+        <button class="chip">国：すべて</button>
+        <button class="chip">ステータス：進行中</button>
+        <button class="chip">期間：今月</button>
+      </div>
+    </div>
+    <div class="tool-right">
+      <button class="btn">並び替え：更新順</button>
+      <a class="btn" href="live_progress.html">CSVエクスポート</a>
+    </div>
+  </div>
+
+  <section class="kpis">
+    <div class="kpi"><div class="mono">今月の回収数</div><div class="num">1,284</div></div>
+    <div class="kpi"><div class="mono">進行中の案件</div><div class="num">8</div></div>
+    <div class="kpi"><div class="mono">QC保留</div><div class="num">12</div></div>
+    <div class="kpi"><div class="mono">予算消化</div><div class="num">54%</div></div>
+  </section>
+
+  <section class="grid-cards">
+    <article class="project-card">
+      <div class="card-head">
+        <strong>駅前・初見反応（東京）</strong>
+        <span class="status-pill">進行中</span>
+      </div>
+      <div class="progress-line"><div class="bar" style="width:65%"></div></div>
+      <div class="meta"><span>目標 200 / 現在 130</span><span>締切 8/20</span><span>品質⚠ 1</span></div>
+      <div class="tags">
+        <span class="chip">10–20代</span><span class="chip">夕方帯</span><span class="chip ok">録音同意必須</span>
+      </div>
+      <div class="inline">
+        <a class="btn" href="live_progress.html">開く</a>
+        <a class="btn" href="client_chat.html">設計調整</a>
+        <a class="btn" href="survey_builder.html">アンケート</a>
+      </div>
+    </article>
+
+    <article class="project-card">
+      <div class="card-head"><strong>観光客満足度（大阪）</strong><span class="status-pill">募集中</span></div>
+      <div class="progress-line"><div class="bar" style="width:18%"></div></div>
+      <div class="meta"><span>目標 300 / 現在 54</span><span>締切 8/25</span></div>
+      <div class="tags"><span class="chip">観光客</span><span class="chip">英語可</span></div>
+      <div class="inline"><a class="btn" href="client_chat.html">開く</a><a class="btn" href="targeting.html">配置</a></div>
+    </article>
+
+    <article class="project-card">
+      <div class="card-head"><strong>店舗退出理由（ソウル）</strong><span class="status-pill">設計中</span></div>
+      <div class="progress-line"><div class="bar" style="width:5%"></div></div>
+      <div class="meta"><span>目標 150 / 現在 8</span><span>締切 9/01</span></div>
+      <div class="tags"><span class="chip">韓国語</span><span class="chip">写真あり</span></div>
+      <div class="inline"><a class="btn btn-primary" href="survey_builder.html">設計を続ける</a></div>
+    </article>
+  </section>
+</main>
+</body></html>

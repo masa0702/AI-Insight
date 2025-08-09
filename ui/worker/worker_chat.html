@@ -1,0 +1,41 @@
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>チャット | Worker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css"></head><body>
+<header class="appbar">
+  <h1>エージェント・チャット</h1>
+  <div class="inline"><a class="btn" href="worker_home.html">ホーム</a></div>
+</header>
+<nav class="subnav">
+  <a href="worker_home.html">タスク</a>
+  <a href="worker_task_detail.html">詳細</a>
+  <a href="worker_interview.html">インタビュー</a>
+  <a href="worker_media.html">メディア</a>
+  <a href="worker_submit.html">提出</a>
+  <a class="active" href="worker_chat.html">チャット</a>
+</nav>
+
+<main class="container" style="padding:16px 0">
+  <div class="messages">
+    <div class="date-sep">今日 12:20</div>
+
+    <div class="msg-row agent">
+      <div class="avatar" aria-hidden="true">A</div>
+      <div class="message">こんにちは。混雑時は安全第一で、無理に声掛けしないでください。<div class="msg-meta">Agent</div></div>
+    </div>
+
+    <div class="msg-row client">
+      <div><div class="message">了解です。改札前は避けます。<div class="msg-meta">You</div></div></div>
+      <div class="avatar you" aria-hidden="true">Y</div>
+    </div>
+  </div>
+
+  <div class="composer">
+    <input class="input" placeholder="メッセージを入力">
+    <button class="icon-btn" aria-label="画像を添付">🖼️</button>
+    <a class="btn btn-primary" href="worker_task_detail.html">送信</a>
+  </div>
+</main>
+</body></html>

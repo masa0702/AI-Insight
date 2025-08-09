@@ -1,0 +1,51 @@
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>配置・条件 | Client</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css"></head><body>
+<header class="appbar">
+  <h1>駅前・初見反応｜配置・条件</h1>
+  <div class="inline"><a class="btn" href="procedure_builder.html">戻る</a><a class="btn btn-primary" href="live_progress.html">募集を開始</a></div>
+</header>
+<nav class="subnav">
+  <a href="client_dashboard.html">ダッシュボード</a>
+  <a href="client_chat.html">エージェント</a>
+  <a href="survey_builder.html">アンケート</a>
+  <a href="procedure_builder.html">実施手順</a>
+  <a class="active" href="targeting.html">配置・条件</a>
+  <a href="live_progress.html">ライブ進捗</a>
+</nav>
+
+<main class="container" style="padding:16px 0">
+  <section class="panel" aria-label="地図">
+    <div class="section-title">エリア指定</div>
+    <div class="map"></div>
+    <div class="geo-hint">※ マップはデモ表示。実装時はポリゴン描画・半径指定に対応</div>
+  </section>
+
+  <section class="panel" style="margin-top:16px">
+    <div class="form-grid">
+      <div><div class="section-title">対象者条件</div>
+        <div class="checklist">
+          <label class="check"><input type="checkbox"> 来訪者（観光含む）</label>
+          <label class="check"><input type="checkbox" checked> 年齢 10–20代</label>
+          <label class="check"><input type="checkbox"> 言語 日本語/英語</label>
+        </div>
+      </div>
+      <div><div class="section-title">回収設定</div>
+        <div class="inline-field"><span>目標サンプル</span><input class="input" style="width:120px" value="200"></div>
+        <div class="inline-field"><span>日数</span><input class="input" style="width:120px" value="3"></div>
+        <div class="inline-field"><span>時間帯</span><input class="input" style="width:200px" value="17:00–20:00"></div>
+      </div>
+      <div><div class="section-title">報酬</div>
+        <div class="inline-field"><span>単価</span><input class="input" style="width:120px" value="¥500"></div>
+        <div class="inline-field"><span>ピーク加算</span><input class="input" style="width:200px" value="+10%（18–20時）"></div>
+      </div>
+      <div><div class="section-title">配布方式</div>
+        <div class="chips"><span class="chip">先着</span><span class="chip">承認制</span><span class="chip">高スコア優先</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+</body></html>

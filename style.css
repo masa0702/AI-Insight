@@ -1,0 +1,230 @@
+/* =================== COLOR SYSTEM (配色を役割ごとに明確化) =================== */
+/* Light 基調: 落ち着いたブルー系、強めのテキストコントラスト */
+:root{
+  /* Surfaces */
+  --bg:            #F7F8FA;   /* 画面背景 */
+  --surface:       #FFFFFF;   /* カード/バー等 */
+  --surface-sheet: #FFFFFF;   /* メニュー/モーダル内 */
+  --border:        #D6DBE1;   /* 区切り線 */
+
+  /* Text */
+  --text:          #0B1220;   /* 主テキスト（黒に近い紺） */
+  --text-muted:    #475569;   /* 補助テキスト */
+  --placeholder:   #6B7280;
+
+  /* Fields */
+  --field-bg:      #FFFFFF;
+  --field-text:    #0B1220;
+  --field-border:  #C7CED6;
+
+  /* Buttons */
+  --primary:       #1D4ED8;   /* Indigo-700 相当（白文字でAA域） */
+  --on-primary:    #FFFFFF;
+  --ghost-bg:      #FFFFFF;
+  --ghost-text:    #0B1220;
+  --ghost-border:  #D6DBE1;
+  --danger:        #DC2626;
+  --on-danger:     #FFFFFF;
+
+  /* Bubbles (Chat) */
+  --bubble-bot-bg:  #EEF2FF;
+  --bubble-bot-tx:  #0B1220;
+  --bubble-user-bg: #E6F4FF;
+  --bubble-user-tx: #0B1220;
+  --bubble-bd:      #D6DBE1;
+
+  /* Misc */
+  --track:         #E8ECF2;   /* 進捗バーのトラック */
+  --shadow-1:      0 10px 30px rgba(15, 23, 42, .10);
+  --shadow-2:      0 6px 18px rgba(15, 23, 42, .08);
+
+  /* Radii & Typography */
+  --r-lg: 18px; --r-md: 14px; --r-sm: 12px;
+  --fz-body: 16px; --lh-body: 1.7; --fz-label: 15px; --fz-title: 18px;
+  /* 入力欄専用のフォントサイズ＆行間 */
+  --fz-input: 18px;
+  --lh-input: 1.75;
+
+}
+
+/* Dark 基調: 紺×炭。テキストは明確に明るく、フィールド/ボタンは暗背景に最適化 */
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:            #0D1117;
+    --surface:       #111827;
+    --surface-sheet: #111827;
+    --border:        #2A3440;
+
+    --text:          #E6EDF3;
+    --text-muted:    #B7C3CF;
+    --placeholder:   #9FB0C3;
+
+    --field-bg:      #0F141A;
+    --field-text:    #E6EDF3;
+    --field-border:  #2A3B4C;
+
+    /* ダークではボタンの文字色を最適化（白文字が沈まないよう背景の彩度を調整） */
+    --primary:       #2D6BE8;  /* 明度抑えめのブルー */
+    --on-primary:    #FFFFFF;  /* 白文字でも4.5:1を確保しやすいトーン */
+    --ghost-bg:      #1A2129;  /* 白ではなく暗めの面に */
+    --ghost-text:    #E6EDF3;
+    --ghost-border:  #334555;
+
+    --danger:        #EF4444;
+    --on-danger:     #0B1220;
+
+    --bubble-bot-bg:  #1C2430;
+    --bubble-bot-tx:  #E6EDF3;
+    --bubble-user-bg: #0F2236;
+    --bubble-user-tx: #DFF5FF;
+    --bubble-bd:      #2C3A48;
+
+    --track:         #1E2630;
+    --shadow-1:      0 14px 34px rgba(0,0,0,.35);
+    --shadow-2:      0 8px 24px rgba(0,0,0,.28);
+  }
+}
+
+/* =================== BASE =================== */
+*{ box-sizing:border-box }
+html,body{ height:100% }
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family: ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Roboto,Helvetica,Arial;
+  font-size:var(--fz-body); line-height:var(--lh-body); letter-spacing:.01em;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+           env(safe-area-inset-bottom) env(safe-area-inset-left);
+  -webkit-text-size-adjust:100%; -webkit-tap-highlight-color:transparent;
+}
+::selection{ background: rgba(29,78,216,.18) }
+::placeholder{ color: var(--placeholder) }
+
+.app{ height:100dvh; max-width:520px; margin:0 auto; display:flex; flex-direction:column;
+      padding: clamp(8px,2.2vw,14px); }
+.glass{ background:var(--surface); border:1px solid var(--border); border-radius:var(--r-lg); box-shadow:var(--shadow-1); }
+
+/* =================== HEADER =================== */
+.header{ position:sticky; top:0; z-index:5; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 12px; }
+.brand{ display:flex; align-items:center; gap:10px; }
+.logo{ width:36px; height:36px; border-radius:8px; background: linear-gradient(140deg, #1d4ed8, #0ea5e9); box-shadow: inset 0 0 0 1px rgba(255,255,255,.4); }
+.brand-name{ font-weight:800; font-size:17px; letter-spacing:.02em; }
+
+.pill{ appearance:none; border:1px solid var(--ghost-border); cursor:pointer; padding:10px 14px; border-radius:999px;
+       color:var(--ghost-text); background:var(--ghost-bg); font-weight:800; }
+.pill:active{ transform:translateY(1px) }
+
+/* =================== PROGRESS =================== */
+.progress{ position:sticky; top:64px; z-index:4; padding:6px 0 10px }
+.progbox{ padding:10px 12px }
+.progline{ display:flex; align-items:center; gap:12px }
+.progtext{ font-weight:800; color:var(--text-muted); font-size:15px }
+.track{ flex:1; height:10px; background:var(--track); border-radius:999px; overflow:hidden }
+.bar{ height:100%; width:0%; background: linear-gradient(90deg, var(--primary), #60A5FA); transition: width .35s ease }
+
+/* =================== LAYOUT =================== */
+.content{ padding:12px 0 10px; display:flex; flex-direction:column; gap:14px }
+.screen{ display:none } .screen.active{ display:block }
+.card{ padding:16px; border-radius:var(--r-lg) }
+.section-title{ font-weight:800; margin:0 0 6px; font-size:var(--fz-title); color:var(--text) }
+.subtle{ color:var(--text-muted); font-size:var(--fz-label) }
+
+/* =================== INPUTS / BUTTONS =================== */
+.textarea{
+  width:100%;
+  min-height: 40dvh;
+  resize: vertical;
+  outline: none;
+  border-radius: var(--r-md);
+  border: 1px solid var(--field-border);
+  background: var(--field-bg);
+  color: var(--field-text);
+  padding: 14px;
+
+  /* ここを強化：入力文字の見やすさ */
+  font-size: var(--fz-input);
+  line-height: var(--lh-input);
+}
+
+/* プレースホルダも少し大きめ＆コントラスト確保 */
+.textarea::placeholder{
+  font-size: calc(var(--fz-input) - 1px);
+  color: var(--placeholder);
+}
+
+/* ダークのTextBoxは高コントラストのまま維持（背景/枠/文字） */
+@media (prefers-color-scheme: dark){
+  .textarea{
+    background:#0f141a;
+    color:#e6edf3;
+    border-color:#2a3b4c;
+  }
+  .textarea::placeholder{
+    color:#9fb0c3;
+  }
+}
+
+.btn{
+  display:block; width:100%; padding:14px 16px; border-radius:var(--r-md); cursor:pointer; border:1px solid transparent;
+  font-weight:800; letter-spacing:.02em; background: var(--primary); color: var(--on-primary);
+}
+.btn:active{ transform:translateY(1px) }
+.btn.ghost{ background:var(--ghost-bg); color:var(--ghost-text); border-color:var(--ghost-border) }
+.btn.danger{ background:var(--danger); color:var(--on-danger) }
+
+/* =================== FAB（質問） =================== */
+.fab{
+  position:fixed; right: clamp(12px,3vw,18px); bottom: calc(24px + env(safe-area-inset-bottom));
+  width:56px; height:56px; border-radius:50%; display:grid; place-items:center; border:1px solid var(--border);
+  background: var(--primary); color: var(--on-primary); box-shadow: var(--shadow-1);
+  z-index:60; transition: opacity .18s ease, transform .18s ease;
+}
+.fab.hidden{ opacity:0; pointer-events:none; transform: translateY(6px) }
+.fab svg{ width:24px; height:24px }
+
+/* =================== BOTTOM SHEET + OVERLAY =================== */
+.overlay{ position:fixed; inset:0; background:rgba(2,6,23,.45); opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:39; }
+.overlay.show{ opacity:1; pointer-events:auto }
+.sheet{ position:fixed; inset:auto 0 0 0; translate:0 100%; transition:translate .28s ease; z-index:40; padding:10px 14px 14px; }
+.sheet.glass{ background:var(--surface-sheet) }
+.sheet.open{ translate:0 0 }
+.sheet .handle{ display:block; width:48px; height:5px; border-radius:999px; background:rgba(2,6,23,.22); margin:6px auto 10px; }
+.menu-item{ display:flex; align-items:center; gap:12px; padding:12px 10px; border-radius:14px; text-decoration:none; color:var(--text) }
+.menu-item:hover{ background: rgba(29,78,216,.08) }
+.icon{ width:34px; height:34px; border-radius:10px; display:grid; place-items:center; color:#fff; background: linear-gradient(140deg, #1d4ed8, #0ea5e9); }
+
+/* =================== MODAL / TOAST =================== */
+.modal{ position:fixed; inset:0; display:none; place-items:center; z-index:70; background:rgba(2,6,23,.45); padding:24px; }
+.modal.open{ display:grid }
+.modal .box{ width:100%; max-width:420px; border-radius:18px; overflow:hidden; background:var(--surface-sheet); border:1px solid var(--border) }
+.modal .head{ padding:14px 16px; font-weight:800; border-bottom:1px solid var(--border); color:var(--text) }
+.modal .body{ padding:16px; color:var(--text) }
+.modal .row{ display:flex; gap:10px; padding:0 16px 16px }
+.modal .row .btn{ flex:1 }
+
+.toast{
+  position:fixed; left:50%; bottom:calc(18px + env(safe-area-inset-bottom)); transform:translateX(-50%) translateY(10px);
+  background:#111827; color:#fff; border-radius:12px; padding:10px 14px; opacity:0; pointer-events:none; transition: opacity .2s ease, transform .2s ease; z-index:75;
+}
+.toast.show{ opacity:1; transform:translateX(-50%) translateY(0) }
+
+/* =================== CHAT =================== */
+.chat-wrap{ display:flex; flex-direction:column; gap:12px }
+.chatbox{ height: calc(100dvh - 290px); overflow:auto; padding-right:4px }
+.bubbles{ display:flex; flex-direction:column; gap:10px }
+.bubble{
+  max-width:82%; padding:12px 14px; border-radius:16px; line-height:1.65; word-break:break-word;
+  border:1px solid var(--bubble-bd);
+}
+.bot { background: var(--bubble-bot-bg); color: var(--bubble-bot-tx); }
+.user{ background: var(--bubble-user-bg); color: var(--bubble-user-tx); align-self:flex-end }
+
+/* =================== HISTORY / FINISH =================== */
+.entry{ padding:12px 0; border-bottom:1px dashed var(--border) }
+.entry:last-child{ border-bottom:none }
+.keta{ font-variant-numeric: tabular-nums; color: var(--text-muted) }
+.center{ display:grid; place-items:center; min-height:58dvh; text-align:center }
+.center h1{ margin:.2rem 0 .5rem; font-size:clamp(1.25rem,3.5vw,1.6rem) }
+
+/* =================== A11y =================== */
+button,.btn,.pill,.fab{ min-height:44px }
+:focus-visible{ outline:2px solid #60A5FA; outline-offset:2px; border-radius:12px }

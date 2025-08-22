@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#1d4ed8" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<title>調査アプリ</title>
+<style>
+/* =================== COLOR SYSTEM (配色を役割ごとに明確化) =================== */
+/* Light 基調: 落ち着いたブルー系、強めのテキストコントラスト */
+:root{
+  /* Surfaces */
+  --bg:            #F7F8FA;   /* 画面背景 */
+  --surface:       #FFFFFF;   /* カード/バー等 */
+  --surface-sheet: #FFFFFF;   /* メニュー/モーダル内 */
+  --border:        #D6DBE1;   /* 区切り線 */
+
+  /* Text */
+  --text:          #0B1220;   /* 主テキスト（黒に近い紺） */
+  --text-muted:    #475569;   /* 補助テキスト */
+  --placeholder:   #6B7280;
+
+  /* Fields */
+  --field-bg:      #FFFFFF;
+  --field-text:    #0B1220;
+  --field-border:  #C7CED6;
+
+  /* Buttons */
+  --primary:       #1D4ED8;   /* Indigo-700 相当（白文字でAA域） */
+  --on-primary:    #FFFFFF;
+  --ghost-bg:      #FFFFFF;
+  --ghost-text:    #0B1220;
+  --ghost-border:  #D6DBE1;
+  --danger:        #DC2626;
+  --on-danger:     #FFFFFF;
+
+  /* Bubbles (Chat) */
+  --bubble-bot-bg:  #EEF2FF;
+  --bubble-bot-tx:  #0B1220;
+  --bubble-user-bg: #E6F4FF;
+  --bubble-user-tx: #0B1220;
+  --bubble-bd:      #D6DBE1;
+
+  /* Misc */
+  --track:         #E8ECF2;   /* 進捗バーのトラック */
+  --shadow-1:      0 10px 30px rgba(15, 23, 42, .10);
+  --shadow-2:      0 6px 18px rgba(15, 23, 42, .08);
+
+  /* Radii & Typography */
+  --r-lg: 18px; --r-md: 14px; --r-sm: 12px;
+  --fz-body: 16px; --lh-body: 1.7; --fz-label: 15px; --fz-title: 18px;
+  /* 入力欄専用のフォントサイズ＆行間 */
+  --fz-input: 18px;
+  --lh-input: 1.75;
+
+}
+
+/* Dark 基調: 紺×炭。テキストは明確に明るく、フィールド/ボタンは暗背景に最適化 */
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:            #0D1117;
+    --surface:       #111827;
+    --surface-sheet: #111827;
+    --border:        #2A3440;
+
+    --text:          #E6EDF3;
+    --text-muted:    #B7C3CF;
+    --placeholder:   #9FB0C3;
+
+    --field-bg:      #0F141A;
+    --field-text:    #E6EDF3;
+    --field-border:  #2A3B4C;
+
+    /* ダークではボタンの文字色を最適化（白文字が沈まないよう背景の彩度を調整） */
+    --primary:       #2D6BE8;  /* 明度抑えめのブルー */
+    --on-primary:    #FFFFFF;  /* 白文字でも4.5:1を確保しやすいトーン */
+    --ghost-bg:      #1A2129;  /* 白ではなく暗めの面に */
+    --ghost-text:    #E6EDF3;
+    --ghost-border:  #334555;
+
+    --danger:        #EF4444;
+    --on-danger:     #0B1220;
+
+    --bubble-bot-bg:  #1C2430;
+    --bubble-bot-tx:  #E6EDF3;
+    --bubble-user-bg: #0F2236;
+    --bubble-user-tx: #DFF5FF;
+    --bubble-bd:      #2C3A48;
+
+    --track:         #1E2630;
+    --shadow-1:      0 14px 34px rgba(0,0,0,.35);
+    --shadow-2:      0 8px 24px rgba(0,0,0,.28);
+  }
+}
+
+/* =================== BASE =================== */
+*{ box-sizing:border-box }
+html,body{ height:100% }
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family: ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",Roboto,Helvetica,Arial;
+  font-size:var(--fz-body); line-height:var(--lh-body); letter-spacing:.01em;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+           env(safe-area-inset-bottom) env(safe-area-inset-left);
+  -webkit-text-size-adjust:100%; -webkit-tap-highlight-color:transparent;
+}
+::selection{ background: rgba(29,78,216,.18) }
+::placeholder{ color: var(--placeholder) }
+
+.app{ height:100dvh; max-width:520px; margin:0 auto; display:flex; flex-direction:column;
+      padding: clamp(8px,2.2vw,14px); }
+.glass{ background:var(--surface); border:1px solid var(--border); border-radius:var(--r-lg); box-shadow:var(--shadow-1); }
+
+/* =================== HEADER =================== */
+.header{ position:sticky; top:0; z-index:5; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:10px 12px; }
+.brand{ display:flex; align-items:center; gap:10px; }
+.logo{ width:36px; height:36px; border-radius:8px; background: linear-gradient(140deg, #1d4ed8, #0ea5e9); box-shadow: inset 0 0 0 1px rgba(255,255,255,.4); }
+.brand-name{ font-weight:800; font-size:17px; letter-spacing:.02em; }
+
+.pill{ appearance:none; border:1px solid var(--ghost-border); cursor:pointer; padding:10px 14px; border-radius:999px;
+       color:var(--ghost-text); background:var(--ghost-bg); font-weight:800; }
+.pill:active{ transform:translateY(1px) }
+
+/* =================== PROGRESS =================== */
+.progress{ position:sticky; top:64px; z-index:4; padding:6px 0 10px }
+.progbox{ padding:10px 12px }
+.progline{ display:flex; align-items:center; gap:12px }
+.progtext{ font-weight:800; color:var(--text-muted); font-size:15px }
+.track{ flex:1; height:10px; background:var(--track); border-radius:999px; overflow:hidden }
+.bar{ height:100%; width:0%; background: linear-gradient(90deg, var(--primary), #60A5FA); transition: width .35s ease }
+
+/* =================== LAYOUT =================== */
+.content{ padding:12px 0 10px; display:flex; flex-direction:column; gap:14px }
+.screen{ display:none } .screen.active{ display:block }
+.card{ padding:16px; border-radius:var(--r-lg) }
+.section-title{ font-weight:800; margin:0 0 6px; font-size:var(--fz-title); color:var(--text) }
+.subtle{ color:var(--text-muted); font-size:var(--fz-label) }
+
+/* =================== INPUTS / BUTTONS =================== */
+.textarea{
+  width:100%;
+  min-height: 40dvh;
+  resize: vertical;
+  outline: none;
+  border-radius: var(--r-md);
+  border: 1px solid var(--field-border);
+  background: var(--field-bg);
+  color: var(--field-text);
+  padding: 14px;
+
+  /* ここを強化：入力文字の見やすさ */
+  font-size: var(--fz-input);
+  line-height: var(--lh-input);
+}
+
+/* プレースホルダも少し大きめ＆コントラスト確保 */
+.textarea::placeholder{
+  font-size: calc(var(--fz-input) - 1px);
+  color: var(--placeholder);
+}
+
+/* ダークのTextBoxは高コントラストのまま維持（背景/枠/文字） */
+@media (prefers-color-scheme: dark){
+  .textarea{
+    background:#0f141a;
+    color:#e6edf3;
+    border-color:#2a3b4c;
+  }
+  .textarea::placeholder{
+    color:#9fb0c3;
+  }
+}
+
+.btn{
+  display:block; width:100%; padding:14px 16px; border-radius:var(--r-md); cursor:pointer; border:1px solid transparent;
+  font-weight:800; letter-spacing:.02em; background: var(--primary); color: var(--on-primary);
+}
+.btn:active{ transform:translateY(1px) }
+.btn.ghost{ background:var(--ghost-bg); color:var(--ghost-text); border-color:var(--ghost-border) }
+.btn.danger{ background:var(--danger); color:var(--on-danger) }
+
+/* =================== FAB（質問） =================== */
+.fab{
+  position:fixed; right: clamp(12px,3vw,18px); bottom: calc(24px + env(safe-area-inset-bottom));
+  width:56px; height:56px; border-radius:50%; display:grid; place-items:center; border:1px solid var(--border);
+  background: var(--primary); color: var(--on-primary); box-shadow: var(--shadow-1);
+  z-index:60; transition: opacity .18s ease, transform .18s ease;
+}
+.fab.hidden{ opacity:0; pointer-events:none; transform: translateY(6px) }
+.fab svg{ width:24px; height:24px }
+
+/* =================== BOTTOM SHEET + OVERLAY =================== */
+.overlay{ position:fixed; inset:0; background:rgba(2,6,23,.45); opacity:0; pointer-events:none; transition:opacity .2s ease; z-index:39; }
+.overlay.show{ opacity:1; pointer-events:auto }
+.sheet{ position:fixed; inset:auto 0 0 0; translate:0 100%; transition:translate .28s ease; z-index:40; padding:10px 14px 14px; }
+.sheet.glass{ background:var(--surface-sheet) }
+.sheet.open{ translate:0 0 }
+.sheet .handle{ display:block; width:48px; height:5px; border-radius:999px; background:rgba(2,6,23,.22); margin:6px auto 10px; }
+.menu-item{ display:flex; align-items:center; gap:12px; padding:12px 10px; border-radius:14px; text-decoration:none; color:var(--text) }
+.menu-item:hover{ background: rgba(29,78,216,.08) }
+.icon{ width:34px; height:34px; border-radius:10px; display:grid; place-items:center; color:#fff; background: linear-gradient(140deg, #1d4ed8, #0ea5e9); }
+
+/* =================== MODAL / TOAST =================== */
+.modal{ position:fixed; inset:0; display:none; place-items:center; z-index:70; background:rgba(2,6,23,.45); padding:24px; }
+.modal.open{ display:grid }
+.modal .box{ width:100%; max-width:420px; border-radius:18px; overflow:hidden; background:var(--surface-sheet); border:1px solid var(--border) }
+.modal .head{ padding:14px 16px; font-weight:800; border-bottom:1px solid var(--border); color:var(--text) }
+.modal .body{ padding:16px; color:var(--text) }
+.modal .row{ display:flex; gap:10px; padding:0 16px 16px }
+.modal .row .btn{ flex:1 }
+
+.toast{
+  position:fixed; left:50%; bottom:calc(18px + env(safe-area-inset-bottom)); transform:translateX(-50%) translateY(10px);
+  background:#111827; color:#fff; border-radius:12px; padding:10px 14px; opacity:0; pointer-events:none; transition: opacity .2s ease, transform .2s ease; z-index:75;
+}
+.toast.show{ opacity:1; transform:translateX(-50%) translateY(0) }
+
+/* =================== CHAT =================== */
+.chat-wrap{ display:flex; flex-direction:column; gap:12px }
+.chatbox{ height: calc(100dvh - 290px); overflow:auto; padding-right:4px }
+.bubbles{ display:flex; flex-direction:column; gap:10px }
+.bubble{
+  max-width:82%; padding:12px 14px; border-radius:16px; line-height:1.65; word-break:break-word;
+  border:1px solid var(--bubble-bd);
+}
+.bot { background: var(--bubble-bot-bg); color: var(--bubble-bot-tx); }
+.user{ background: var(--bubble-user-bg); color: var(--bubble-user-tx); align-self:flex-end }
+
+/* =================== HISTORY / FINISH =================== */
+.entry{ padding:12px 0; border-bottom:1px dashed var(--border) }
+.entry:last-child{ border-bottom:none }
+.keta{ font-variant-numeric: tabular-nums; color: var(--text-muted) }
+.center{ display:grid; place-items:center; min-height:58dvh; text-align:center }
+.center h1{ margin:.2rem 0 .5rem; font-size:clamp(1.25rem,3.5vw,1.6rem) }
+
+/* =================== A11y =================== */
+button,.btn,.pill,.fab{ min-height:44px }
+:focus-visible{ outline:2px solid #60A5FA; outline-offset:2px; border-radius:12px }
+</style>
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <div class="header glass">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="brand-name">調査アプリ</div>
+      </div>
+      <button class="pill" id="menuOpen">メニュー</button>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress">
+      <div class="glass progbox">
+        <div class="progline">
+          <div class="progtext">進捗 <span id="pc">0</span>/<span id="pt">5</span></div>
+          <div class="track"><div class="bar" id="bar"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screens -->
+    <div class="content">
+      <!-- Manual -->
+      <section id="screen-manual" class="screen active">
+        <div class="glass card">
+          <h3 class="section-title">マニュアル</h3>
+          <p class="subtle">ここに調査手順や注意事項を掲載します。文章や画像は自由に差し替え可能です。</p>
+          <ul>
+            <li>手順1：XXXXを開く</li>
+            <li>手順2：YYYYを確認する</li>
+            <li>手順3：結果を記録する</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Survey -->
+      <section id="screen-survey" class="screen">
+        <div class="glass card" style="display:flex;flex-direction:column;gap:12px">
+          <label for="tb" class="subtle">TextBox</label>
+          <textarea id="tb" class="textarea" placeholder="観察内容や指示に従って入力…"></textarea>
+          <button class="btn ghost" id="instBtn">指示</button>
+        </div>
+
+        <div class="glass card" id="doneCard" style="display:none;text-align:center">
+          <h3 class="section-title">全てのタスクを完了しました。</h3>
+          <p class="subtle">内容に問題がなければ、調査を終了してください。</p>
+          <button class="btn danger" id="endBtn">調査を終了する</button>
+        </div>
+
+        <button class="btn" id="submitBtn">提出</button>
+      </section>
+
+      <!-- Chat -->
+      <section id="screen-chat" class="screen">
+        <div class="glass card chat-wrap">
+          <div class="subtle">回答</div>
+          <div class="chatbox">
+            <div class="bubbles" id="chatList">
+              <div class="bubble bot">質問をどうぞ</div>
+            </div>
+          </div>
+          <div class="inputrow" style="display:flex; gap:10px">
+            <input id="qInput" class="textarea" style="min-height:auto; height:46px" type="text" placeholder="質問内容" />
+            <button class="btn" id="sendBtn" style="width:34%">質問</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- History -->
+      <section id="screen-history" class="screen">
+        <div class="glass card">
+          <div class="subtle" style="margin-bottom:8px">質問履歴</div>
+          <div id="hist"></div>
+        </div>
+      </section>
+
+      <!-- Finish -->
+      <section id="screen-finish" class="screen">
+        <div class="glass card center">
+          <div>
+            <h1>全てのタスクを完了しました。</h1>
+            <p class="subtle">お疲れ様でした！<br>ブラウザを閉じてください。</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- FAB（質問ショートカット。画面に応じて表示/位置を自動調整） -->
+  <button class="fab" id="fabAsk" aria-label="質問する">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M8 10a4 4 0 1 1 6 3.46V15M12 19h.01"/>
+    </svg>
+  </button>
+
+  <!-- Overlay + Bottom Sheet Menu（終了は含めない） -->
+  <div class="overlay" id="overlay"></div>
+  <div class="sheet glass" id="sheet">
+    <span class="handle"></span>
+    <a class="menu-item" data-screen="manual">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M4 4v15.5A2.5 2.5 0 0 1 6.5 17H20V6a2 2 0 0 0-2-2H6"/>
+        </svg>
+      </span>
+      <div>マニュアル表示</div>
+    </a>
+    <a class="menu-item" data-screen="survey">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8"/>
+        </svg>
+      </span>
+      <div>調査実施</div>
+    </a>
+    <a class="menu-item" data-screen="chat">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15a4 4 0 0 1-4 4H7l-4 4V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/>
+        </svg>
+      </span>
+      <div>質問Chat</div>
+    </a>
+    <a class="menu-item" data-screen="history">
+      <span class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 5h18M3 10h18M3 15h10"/>
+        </svg>
+      </span>
+      <div>質問履歴</div>
+    </a>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal" id="confirmModal">
+    <div class="box">
+      <div class="head">提出しますか？</div>
+      <div class="body">内容を確認のうえ提出してください。</div>
+      <div class="row">
+        <button class="btn ghost" data-close>いいえ</button>
+        <button class="btn" id="confirmYes">はい</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="exitModal">
+    <div class="box">
+      <div class="head">調査を終了しますか？</div>
+      <div class="body">終了すると進捗はリセットされます。</div>
+      <div class="row">
+        <button class="btn ghost" data-close>キャンセル</button>
+        <button class="btn danger" id="exitYes">終了する</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">提出しました！</div>
+
+<script>
+/* ===== 状態 ===== */
+const screens = ["manual","survey","chat","history","finish"];
+let current = "manual";
+const total = 5; let count = 0;
+const QA = [];
+const $ = s => document.querySelector(s);
+
+/* ===== 進捗 ===== */
+const pc = $("#pc"), pt = $("#pt"), bar = $("#bar"); pt.textContent = total;
+function setProgress(n){
+  count = Math.max(0, Math.min(total, n));
+  pc.textContent = count; bar.style.width = (count/total*100) + "%";
+  $("#doneCard").style.display = count >= total ? "block" : "none";
+  updateFab();
+}
+
+/* ===== 画面遷移 ===== */
+function show(screen){
+  current = screen;
+  screens.forEach(sc=>{
+    const el = document.getElementById(`screen-${sc}`);
+    if(el) el.classList.toggle("active", sc===screen);
+  });
+  closeSheet();
+  updateFab();
+}
+
+/* ===== トースト ===== */
+function toast(msg){
+  const t = $("#toast"); t.textContent = msg || "完了しました";
+  t.classList.add("show"); setTimeout(()=> t.classList.remove("show"), 1500);
+}
+
+/* ===== メニュー ===== */
+const sheet = $("#sheet"), overlay = $("#overlay"), menuOpen = $("#menuOpen");
+const openSheet  = ()=>{ sheet.classList.add("open"); overlay.classList.add("show"); hideFab(true); };
+const closeSheet = ()=>{ sheet.classList.remove("open"); overlay.classList.remove("show"); hideFab(false); };
+menuOpen.addEventListener("click", openSheet);
+overlay.addEventListener("click", closeSheet);
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") closeSheet(); });
+let startY=null;
+sheet.addEventListener("pointerdown", e=>{ startY=e.clientY; });
+sheet.addEventListener("pointerup", e=>{ if(startY && e.clientY-startY>48) closeSheet(); startY=null; });
+sheet.addEventListener("click", e=>{
+  const a = e.target.closest("[data-screen]");
+  if(a){ show(a.dataset.screen); }
+});
+
+/* ===== Survey: 提出・終了 ===== */
+$("#submitBtn").addEventListener("click", ()=> $("#confirmModal").classList.add("open"));
+$("#confirmModal [data-close]").addEventListener("click", ()=> $("#confirmModal").classList.remove("open"));
+$("#confirmYes").addEventListener("click", ()=>{
+  $("#confirmModal").classList.remove("open");
+  toast("提出しました！"); setProgress(count + 1);
+});
+$("#endBtn").addEventListener("click", ()=> $("#exitModal").classList.add("open"));
+$("#exitModal [data-close]").addEventListener("click", ()=> $("#exitModal").classList.remove("open"));
+$("#exitYes").addEventListener("click", ()=>{
+  $("#exitModal").classList.remove("open"); show("finish");
+});
+
+/* ===== Chat ===== */
+const chatList = $("#chatList");
+function addBubble(text, who="user"){
+  const div = document.createElement("div");
+  div.className = `bubble ${who}`; div.textContent = text;
+  chatList.appendChild(div);
+  chatList.parentElement.scrollTop = chatList.parentElement.scrollHeight;
+}
+$("#sendBtn").addEventListener("click", ()=>{
+  const input = $("#qInput"); const q = input.value.trim(); if(!q) return;
+  addBubble(q,"user"); input.value="";
+  setTimeout(()=>{ const a="確認しました。次の手順へ進んでください。";
+    addBubble(a,"bot"); QA.push({q,a}); renderHistory(); }, 220);
+});
+
+/* ===== History ===== */
+function renderHistory(){
+  const hist = $("#hist"); hist.innerHTML="";
+  if(!QA.length){ hist.innerHTML = `<div class="subtle">まだ履歴がありません。</div>`; return; }
+  QA.forEach((item,i)=>{
+    const el=document.createElement("div");
+    el.className="entry";
+    el.innerHTML = `<div class="keta">質問 ${i+1}</div>
+                    <div style="margin:.35rem 0 .5rem">${item.q}</div>
+                    <div class="subtle">回答</div><div>${item.a}</div>`;
+    hist.appendChild(el);
+  });
+}
+
+/* ===== FAB：表示/位置調整（被り回避 + 画面に応じて表示制御） ===== */
+const fab = $("#fabAsk");
+function hideFab(h){ fab.classList.toggle("hidden", !!h); }
+function updateFab(){
+  const hide = (current==="chat" || current==="finish");
+  fab.classList.toggle("hidden", hide);
+  if(hide) return;
+  const offset = (current==="survey" ? (count>=total ? 160 : 120) : 24);
+  fab.style.bottom = `calc(${offset}px + env(safe-area-inset-bottom))`;
+}
+fab.addEventListener("click", ()=>{
+  if(current!=="chat"){ show("chat"); }
+  setTimeout(()=> document.getElementById("qInput")?.focus(), 60);
+});
+
+/* ===== 初期化 ===== */
+show("manual"); setProgress(0); renderHistory();
+document.getElementById("instBtn").addEventListener("click", ()=> toast("指示：画面Aを撮影して記録してください"));
+const hash = location.hash.replace("#",""); if(screens.includes(hash)) show(hash);
+window.addEventListener("hashchange", ()=>{ const h=location.hash.replace("#",""); if(screens.includes(h)) show(h); });
+</script>
+</body>
+</html>

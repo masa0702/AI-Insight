@@ -228,3 +228,37 @@ body{
 /* =================== A11y =================== */
 button,.btn,.pill,.fab{ min-height:44px }
 :focus-visible{ outline:2px solid #60A5FA; outline-offset:2px; border-radius:12px }
+
+
+/* ===== Markdown rendering ===== */
+.markdown-body {
+  font-size: 16px;
+  line-height: 1.8;
+}
+.markdown-body h1, .markdown-body h2, .markdown-body h3 {
+  margin: .6em 0 .4em;
+  line-height: 1.35;
+  color: var(--text);
+}
+.markdown-body p { margin: .6em 0; }
+.markdown-body code {
+  padding: .1em .35em; border: 1px solid var(--border);
+  background: var(--field-bg); color: var(--field-text); border-radius: 6px;
+}
+.markdown-body pre {
+  overflow:auto; padding: 12px; border:1px solid var(--border);
+  background: var(--field-bg); border-radius: 10px;
+}
+
+/* ===== 調査ステップ表示 ===== */
+.step-box {
+  display:flex; align-items:flex-start; gap:10px;
+  padding:12px 14px; border:1px solid var(--border);
+  background: var(--surface); border-radius: var(--r-md);
+}
+.step-box .num {
+  font-weight:800; min-width:2.4em; text-align:center;
+  color: var(--on-primary); background: var(--primary);
+  border-radius: 999px; padding: 4px 8px;
+}
+.step-box .txt { color: var(--text); }

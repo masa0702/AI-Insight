@@ -62,11 +62,31 @@ def build_system_context():
 """
   return ctx
 
+# === 追加：安全な数値変換 ===
+def to_int(val, default=0):
+  if val is None:
+    return default
+  if isinstance(val, bool):
+    return int(val)
+  if isinstance(val, (int, float)):
+    return int(val)
+  if isinstance(val, str):
+    v = val.strip()
+    if v == "":
+      return default
+    try:
+      # "1.0" なども許容
+      return int(float(v))
+    except Exception:
+      return default
+  return default
+
+
 # ---------- Endpoints ----------
 @app.post("/api/submit")
 async def api_submit(payload: dict):
   ts = int(time.time())
-  step = int(payload.get("step", 0))
+  step = to_int(payload.get("step"), 0)   # ★ int(...) 直呼びを防御的キャストに変更
   content = (payload.get("content") or "").strip()
   name = f"{ts:010d}-step{step}.txt"
   (SUBMIT_DIR / name).write_text(content, encoding="utf-8")

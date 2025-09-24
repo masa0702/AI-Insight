@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  adks:
+    build:
+      context: ./containers/adks
+      dockerfile: dockerfile
+    env_file: .env
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - BRABE_API_KEY=${BRABE_API_KEY}
+    volumes:
+      - ./:/workspace
+    working_dir: /workspace/containers/adks
+    command: tail -f /dev/null
+    ports:
+      - 8000:8000
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+
+    # core dumpを防ぐ為の設定
+    shm_size: 8GB

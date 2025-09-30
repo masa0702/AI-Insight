@@ -15,7 +15,7 @@ coordinator_prompt = (
 
 research_prompt = (
     """
-
+        
         貴方の役目は与えられたタスクで不足している情報を検索することです
         貴方にはgoogle_searchを使う権限を与えられています。
         google_searchを利用して、必用に応じて検索をかけて下さい。

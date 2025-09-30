@@ -1,21 +1,27 @@
 version: "3.9"
 
 services:
-  adks:
-    build:
-      context: ./containers/adks
+  db:
+    build: 
+      context: ./containers/db
       dockerfile: dockerfile
-    env_file: .env
-    environment:
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
-      - BRABE_API_KEY=${BRABE_API_KEY}
+    volumes:
+      - ./containers/db:/db
+    
+
+
+  api:
+    build:
+      context: ./containers/api
+      dockerfile: dockerfile
+    # env_file: .env
+    # environment:
     volumes:
       - ./:/workspace
-    working_dir: /workspace/containers/adks
+    working_dir: /workspace/containers/backend
     command: tail -f /dev/null
     ports:
-      - 8000:8000
+      - 8080:8080
     deploy:
       resources:
         reservations:
